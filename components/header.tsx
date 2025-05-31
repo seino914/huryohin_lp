@@ -31,77 +31,103 @@ export function Header() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled 
-          ? "bg-white/90 backdrop-blur-md shadow-sm dark:bg-background/90" 
-          : "bg-transparent"
+          ? "bg-white/95 backdrop-blur-md shadow-lg dark:bg-gray-900/95" 
+          : "bg-white/90 backdrop-blur-sm shadow-sm dark:bg-gray-900/90"
       )}
     >
-      <div className="container mx-auto flex items-center justify-between p-4">
-        <Link href="/" className="flex items-center space-x-2">
-          <span className="text-2xl font-bold text-primary">
-            エコクリーン
-          </span>
-        </Link>
-        
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
-          {navLinks.map((link) => (
-            <Link 
-              key={link.href}
-              href={link.href}
-              className="font-medium text-muted-foreground hover:text-primary transition"
+      <div className="container mx-auto px-4 py-3">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="flex items-center space-x-3">
+            <div className="flex items-center">
+              <span className="text-xl md:text-2xl font-bold text-green-600">
+                廃品回収
+              </span>
+              <span className="text-xl md:text-2xl font-bold text-gray-800 dark:text-white ml-1">
+                エコクリーン
+              </span>
+            </div>
+          </Link>
+          
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center space-x-8">
+            {navLinks.map((link) => (
+              <Link 
+                key={link.href}
+                href={link.href}
+                className="font-medium text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+          
+          {/* Desktop Phone & CTA */}
+          <div className="hidden lg:flex items-center space-x-6">
+            <div className="flex items-center text-gray-700 dark:text-gray-300">
+              <PhoneCall className="w-4 h-4 mr-2 text-green-600" />
+              <span className="font-semibold text-lg">0120-123-456</span>
+            </div>
+            <Button 
+              asChild 
+              className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 shadow-lg hover:shadow-xl transition-all duration-200"
             >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-        
-        <div className="hidden md:flex items-center space-x-4">
-          <div className="flex items-center">
-            <PhoneCall className="w-4 h-4 mr-2 text-primary" />
-            <span className="font-medium">0120-123-456</span>
+              <Link href="#contact">今すぐ相談する</Link>
+            </Button>
           </div>
-          <Button asChild>
-            <Link href="#contact">今すぐ相談する</Link>
-          </Button>
+          
+          {/* Mobile Phone (md screens) */}
+          <div className="hidden md:flex lg:hidden items-center space-x-4">
+            <div className="flex items-center text-gray-700 dark:text-gray-300">
+              <PhoneCall className="w-4 h-4 mr-1 text-green-600" />
+              <span className="font-semibold text-sm">0120-123-456</span>
+            </div>
+          </div>
+          
+          {/* Mobile Menu Button */}
+          <button 
+            className="lg:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="メニューを開く"
+          >
+            {isMobileMenuOpen ? (
+              <X className="h-6 w-6 text-gray-700 dark:text-gray-300" />
+            ) : (
+              <Menu className="h-6 w-6 text-gray-700 dark:text-gray-300" />
+            )}
+          </button>
         </div>
-        
-        {/* Mobile Menu Button */}
-        <button 
-          className="md:hidden"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          {isMobileMenuOpen ? (
-            <X className="h-6 w-6 text-primary" />
-          ) : (
-            <Menu className="h-6 w-6 text-primary" />
-          )}
-        </button>
       </div>
       
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-background border-t">
-          <div className="container mx-auto py-4 space-y-4">
-            <nav className="flex flex-col space-y-4">
+        <div className="lg:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 shadow-lg">
+          <div className="container mx-auto px-4 py-6">
+            <nav className="flex flex-col space-y-4 mb-6">
               {navLinks.map((link) => (
                 <Link 
                   key={link.href}
                   href={link.href}
-                  className="font-medium text-foreground py-2"
+                  className="font-medium text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 py-2 transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.label}
                 </Link>
               ))}
             </nav>
-            <div className="flex flex-col space-y-4 pt-4 border-t">
-              <div className="flex items-center">
-                <PhoneCall className="w-4 h-4 mr-2 text-primary" />
-                <span className="font-medium">0120-123-456</span>
+            
+            <div className="border-t border-gray-200 dark:border-gray-700 pt-6 space-y-4">
+              <div className="flex items-center justify-center md:hidden">
+                <PhoneCall className="w-5 h-5 mr-2 text-green-600" />
+                <span className="font-semibold text-lg text-gray-700 dark:text-gray-300">0120-123-456</span>
               </div>
-              <Button className="w-full" asChild>
-                <Link href="#contact">今すぐ相談する</Link>
+              <Button 
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 shadow-lg" 
+                asChild
+              >
+                <Link href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
+                  今すぐ相談する
+                </Link>
               </Button>
             </div>
           </div>
